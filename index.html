@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coffee Shop — Freshly Brewed Happiness in Every Cup</title>
+<meta name="description" content="Coffee Shop in Gandhare Village, Khadakpada, Kalyan — premium coffee, fresh food, cozy ambience. Rated 4.1★ from 1,404+ reviews.">
+<meta name="theme-color" content="#2B1810">
+
+<!-- Preconnect for performance -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500&family=Outfit:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- Favicon (placeholder) -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☕</text></svg>">
+
+<link rel="stylesheet" href="style.css">
+
+<!--
+  EmailJS SDK — required for the contact form to send real emails.
+  Uncomment the line below once you have created your EmailJS account
+  and added your Public Key / Service ID / Template ID in script.js
+  (search for "EMAILJS_PUBLIC_KEY" near the top of the EmailJS section).
+-->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+
+<!-- ============ LOADING SCREEN ============ -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader-inner">
+    <div class="loader-cup">
+      <div class="loader-steam s1"></div>
+      <div class="loader-steam s2"></div>
+      <div class="loader-steam s3"></div>
+      <div class="loader-cup-body"></div>
+      <div class="loader-cup-handle"></div>
+    </div>
+    <p class="loader-text">Brewing your experience<span class="dots"><i>.</i><i>.</i><i>.</i></span></p>
+  </div>
+</div>
+
+<!-- ============ AMBIENT 3D CANVAS BACKGROUND ============ -->
+<canvas id="bg-canvas" aria-hidden="true"></canvas>
+<div class="grain-overlay" aria-hidden="true"></div>
+
+<!-- ============ SCROLL PROGRESS BAR ============ -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- ============ SKIP LINK (ACCESSIBILITY) ============ -->
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<!-- ============ NAVIGATION ============ -->
+<header class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="#home" class="nav-logo" aria-label="Coffee Shop home">
+      <span class="logo-mark">☕</span>
+      <span class="logo-text">Coffee<em>Shop</em></span>
+    </a>
+
+    <nav class="nav-links" id="navLinks" aria-label="Primary">
+      <a href="#home" class="nav-link active">Home</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="#menu" class="nav-link">Menu</a>
+      <a href="#specials" class="nav-link">Special Drinks</a>
+      <a href="#gallery" class="nav-link">Gallery</a>
+      <a href="#reviews" class="nav-link">Reviews</a>
+      <a href="#contact" class="nav-link">Contact</a>
+      <a href="#location" class="nav-link">Location</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark and light mode" aria-pressed="false">
+        <svg class="icon-sun" viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="5"/><g stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.2" y1="4.2" x2="5.6" y2="5.6"/><line x1="18.4" y1="18.4" x2="19.8" y2="19.8"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.2" y1="19.8" x2="5.6" y2="18.4"/><line x1="18.4" y1="5.6" x2="19.8" y2="4.2"/></g></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" width="20" height="20"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <a href="#menu" class="btn btn-gold btn-sm nav-cta">Order Now</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ============ HERO SECTION ============ -->
+<section class="hero" id="home">
+  <div class="hero-bg">
+    <img src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=1920&q=80" alt="" loading="eager" fetchpriority="high">
+    <div class="hero-overlay"></div>
+  </div>
+
+  <div class="hero-beans" aria-hidden="true">
+    <span class="bean b1"></span><span class="bean b2"></span><span class="bean b3"></span>
+    <span class="bean b4"></span><span class="bean b5"></span><span class="bean b6"></span>
+  </div>
+
+  <div class="hero-content">
+    <p class="eyebrow reveal-up">Gandhare Village · Khadakpada · Kalyan</p>
+    <h1 class="hero-title reveal-up" data-delay="1">Freshly Brewed<br><span class="text-gold">Happiness</span> in Every Cup.</h1>
+    <p class="hero-sub reveal-up" data-delay="2">Small-batch roasted beans, honest food, and a room built for lingering. Come sit with us a while.</p>
+
+    <div class="hero-rating reveal-up" data-delay="3">
+      <span class="stars" aria-hidden="true">★★★★☆</span>
+      <span class="rating-text"><strong>4.1</strong> · 1,404+ Reviews on Google</span>
+    </div>
+
+    <div class="hero-actions reveal-up" data-delay="4">
+      <a href="#menu" class="btn btn-gold btn-lg ripple">Explore Menu</a>
+      <a href="#location" class="btn btn-outline btn-lg ripple">Visit Us</a>
+    </div>
+  </div>
+
+  <div class="hero-cup" aria-hidden="true">
+    <div class="cup-steam st1"></div>
+    <div class="cup-steam st2"></div>
+    <div class="cup-steam st3"></div>
+  </div>
+
+  <a href="#about" class="scroll-cue" aria-label="Scroll to content">
+    <span class="scroll-cue-mouse"><span></span></span>
+  </a>
+</section>
+
+<!-- ============ ABOUT SECTION ============ -->
+<section class="about section" id="about">
+  <div class="container about-grid">
+    <div class="about-media reveal">
+      <div class="about-img-main">
+        <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=900&q=80" alt="Barista pouring latte art in a warm, wood-panelled café" loading="lazy">
+      </div>
+      <div class="about-img-float">
+        <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=500&q=80" alt="Cozy café seating area with warm lighting" loading="lazy">
+      </div>
+      <div class="about-badge">
+        <span class="badge-num" data-count="12">0</span>
+        <span class="badge-label">Years of<br>Craft</span>
+      </div>
+    </div>
+
+    <div class="about-copy reveal">
+      <p class="eyebrow">Our Story</p>
+      <h2 class="section-title">A cup poured with intention, every single time.</h2>
+      <p class="about-text">Coffee Shop began as a single roaster and a handful of tables in Khadakpada — a place for neighbours to slow down. Today the ritual hasn't changed: green beans are roasted in small batches, milk is steamed to order, and nothing sits waiting under a heat lamp.</p>
+      <p class="about-text">We built this room for long mornings and longer conversations — warm wood, low light, and the quiet hiss of the espresso machine doing its work.</p>
+
+      <ul class="about-points">
+        <li><span class="point-ico">✓</span> Single-origin, small-batch roasted beans</li>
+        <li><span class="point-ico">✓</span> Fresh brewing — nothing pre-made or reheated</li>
+        <li><span class="point-ico">✓</span> A comfortable, unhurried ambience</li>
+      </ul>
+
+      <div class="about-stats">
+        <div class="stat"><span class="stat-num" data-count="1404">0</span><span class="stat-plus">+</span><span class="stat-label">Happy Reviews</span></div>
+        <div class="stat"><span class="stat-num" data-count="45">0</span><span class="stat-plus">+</span><span class="stat-label">Menu Items</span></div>
+        <div class="stat"><span class="stat-num" data-count="4">0</span><span class="stat-decimal">.1</span><span class="stat-label">Google Rating</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ROAST CURVE ("HOW IT'S MADE") ============ -->
+<section class="roast section" id="roast">
+  <div class="container roast-grid">
+    <div class="roast-copy reveal">
+      <p class="eyebrow">How It's Made</p>
+      <h2 class="section-title">The roast curve is the recipe.</h2>
+
+      <div class="roast-chart-wrap">
+        <span class="roast-axis-y">°F</span>
+        <svg class="roast-svg" viewBox="0 0 560 320" preserveAspectRatio="none" role="img" aria-label="Line chart of roast temperature climbing from charge to drop over 11 minutes 30 seconds">
+          <line x1="0" y1="300" x2="560" y2="300" class="roast-baseline"/>
+          <path class="roast-path" d="M14,286 C120,272 150,190 214,158 C260,136 290,96 318,80 C360,58 470,30 546,18"></path>
+          <circle class="roast-point" cx="14" cy="286" r="6"></circle>
+          <circle class="roast-point" cx="214" cy="158" r="6"></circle>
+          <circle class="roast-point" cx="318" cy="80" r="6"></circle>
+          <circle class="roast-point" cx="546" cy="18" r="6"></circle>
+        </svg>
+        <div class="roast-axis-x"><span>0:00</span><span>11:30</span></div>
+      </div>
+    </div>
+
+    <div class="roast-stages reveal" id="roastStages"><!-- injected by script.js --></div>
+  </div>
+</section>
+
+<!-- ============ MENU SECTION ============ -->
+<section class="menu section" id="menu">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow center">The Menu</p>
+      <h2 class="section-title center">Crafted to order, made to enjoy</h2>
+      <p class="section-sub center">From first espresso to last bite — everything is brewed, baked, and plated fresh.</p>
+    </div>
+
+    <div class="menu-filters reveal" id="menuFilters" role="tablist" aria-label="Menu categories">
+      <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">All</button>
+      <button class="filter-btn" data-filter="espresso" role="tab" aria-selected="false">Espresso</button>
+      <button class="filter-btn" data-filter="cappuccino" role="tab" aria-selected="false">Cappuccino</button>
+      <button class="filter-btn" data-filter="latte" role="tab" aria-selected="false">Latte</button>
+      <button class="filter-btn" data-filter="americano" role="tab" aria-selected="false">Americano</button>
+      <button class="filter-btn" data-filter="mocha" role="tab" aria-selected="false">Mocha</button>
+      <button class="filter-btn" data-filter="cold" role="tab" aria-selected="false">Cold Coffee</button>
+      <button class="filter-btn" data-filter="iced" role="tab" aria-selected="false">Iced Latte</button>
+      <button class="filter-btn" data-filter="frappe" role="tab" aria-selected="false">Frappes</button>
+      <button class="filter-btn" data-filter="tea" role="tab" aria-selected="false">Tea</button>
+      <button class="filter-btn" data-filter="food" role="tab" aria-selected="false">Food</button>
+      <button class="filter-btn" data-filter="dessert" role="tab" aria-selected="false">Desserts</button>
+    </div>
+
+    <div class="menu-grid" id="menuGrid"><!-- injected by script.js --></div>
+  </div>
+</section>
+
+<!-- ============ SPECIAL OFFERS ============ -->
+<section class="specials section" id="specials">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow center">Special Drinks &amp; Offers</p>
+      <h2 class="section-title center">Deals worth coming back for</h2>
+    </div>
+
+    <div class="offers-grid">
+      <div class="offer-card offer-1 reveal">
+        <span class="offer-tag">Everyday</span>
+        <h3>Buy 1 Get 1 Coffee</h3>
+        <p>On all handcrafted coffees, every weekday before 11 AM.</p>
+        <span class="offer-cta">Claim in-store →</span>
+      </div>
+      <div class="offer-card offer-2 reveal">
+        <span class="offer-tag">4 – 6 PM</span>
+        <h3>Happy Hours</h3>
+        <p>Flat 20% off cold coffees, frappes &amp; iced lattes.</p>
+        <span class="offer-cta">Claim in-store →</span>
+      </div>
+      <div class="offer-card offer-3 reveal">
+        <span class="offer-tag">Sat – Sun</span>
+        <h3>Weekend Specials</h3>
+        <p>Free pastry with any large brew, all weekend long.</p>
+        <span class="offer-cta">Claim in-store →</span>
+      </div>
+      <div class="offer-card offer-4 reveal">
+        <span class="offer-tag">Limited</span>
+        <h3>Seasonal Drinks</h3>
+        <p>Try our monsoon masala mocha — here for a limited time.</p>
+        <span class="offer-cta">Claim in-store →</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALLERY ============ -->
+<section class="gallery section" id="gallery">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow center">Gallery</p>
+      <h2 class="section-title center">A little look inside</h2>
+    </div>
+
+    <div class="gallery-grid" id="galleryGrid"><!-- injected by script.js --></div>
+  </div>
+</section>
+
+<!-- ============ REVIEWS ============ -->
+<section class="reviews section" id="reviews">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow center">Reviews</p>
+      <h2 class="section-title center">What Kalyan is saying</h2>
+      <div class="reviews-score">
+        <span class="score-num">4.1</span>
+        <span class="score-stars" aria-hidden="true">★★★★☆</span>
+        <span class="score-count">1,404+ Reviews on Google</span>
+      </div>
+    </div>
+
+    <div class="reviews-track-wrap reveal">
+      <div class="reviews-track" id="reviewsTrack"><!-- injected by script.js --></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY CHOOSE US ============ -->
+<section class="why section" id="why">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow center">Why Choose Us</p>
+      <h2 class="section-title center">Small details, done properly</h2>
+    </div>
+
+    <div class="why-grid" id="whyGrid"><!-- injected by script.js --></div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="faq section" id="faq">
+  <div class="container faq-grid">
+    <div class="faq-intro reveal">
+      <p class="eyebrow">FAQ</p>
+      <h2 class="section-title">Good to know</h2>
+      <p class="section-sub">Can't find your answer? <a href="#contact">Send us a message</a> and we'll get back to you.</p>
+    </div>
+    <div class="faq-list reveal" id="faqList"><!-- injected by script.js --></div>
+  </div>
+</section>
+
+<!-- ============ NEWSLETTER ============ -->
+<section class="newsletter section">
+  <div class="container newsletter-inner reveal">
+    <div class="newsletter-copy">
+      <p class="eyebrow">Stay in the loop</p>
+      <h2 class="section-title">First sip on us, on your birthday.</h2>
+      <p class="section-sub">Join our list for seasonal drinks, secret offers &amp; the occasional good excuse to visit.</p>
+    </div>
+    <form class="newsletter-form" id="newsletterForm" novalidate>
+      <label for="newsletterEmail" class="sr-only">Email address</label>
+      <input type="email" id="newsletterEmail" name="email" placeholder="you@email.com" required autocomplete="email">
+      <button type="submit" class="btn btn-gold ripple">
+        <span class="btn-text">Subscribe</span>
+        <span class="btn-spinner" aria-hidden="true"></span>
+      </button>
+    </form>
+    <p class="newsletter-msg" id="newsletterMsg" role="status" aria-live="polite"></p>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="contact section" id="contact">
+  <div class="container contact-grid">
+    <div class="contact-info reveal">
+      <p class="eyebrow">Contact</p>
+      <h2 class="section-title">Come by, or drop us a line</h2>
+
+      <ul class="contact-list">
+        <li>
+          <span class="contact-ico" aria-hidden="true">📍</span>
+          <div><strong>Address</strong><p>Gandhare Village, Khadakpada, Kalyan, Maharashtra 421301</p></div>
+        </li>
+        <li>
+          <span class="contact-ico" aria-hidden="true">📞</span>
+          <div><strong>Phone</strong><p><a href="tel:+91 7977369769">+91 XXXXX XXXXX</a> <em>(placeholder — update)</em></p></div>
+        </li>
+        <li>
+          <span class="contact-ico" aria-hidden="true">📸</span>
+          <div><strong>Instagram</strong><p><a href="https://instagram.com/coffeeshop_placeholder" target="_blank" rel="noopener">@coffeeshop_placeholder</a> <em>(placeholder — update)</em></p></div>
+        </li>
+        <li>
+          <span class="contact-ico" aria-hidden="true">✉️</span>
+          <div><strong>Email</strong><p><a href="mailto:hello@coffeeshop.placeholder">hello@coffeeshop.placeholder</a> <em>(placeholder — update)</em></p></div>
+        </li>
+      </ul>
+
+      <div class="contact-hours">
+        <strong>Opening Hours</strong>
+        <div class="hours-row"><span>Mon – Fri</span><span>7:30 AM – 10:30 PM</span></div>
+        <div class="hours-row"><span>Sat – Sun</span><span>8:00 AM – 11:00 PM</span></div>
+      </div>
+    </div>
+
+    <div class="contact-form-wrap reveal">
+      <form class="contact-form" id="contactForm" novalidate>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="cf-name">Name</label>
+            <input type="text" id="cf-name" name="name" required autocomplete="name">
+            <span class="field-error" id="err-name"></span>
+          </div>
+          <div class="form-field">
+            <label for="cf-email">Email</label>
+            <input type="email" id="cf-email" name="email" required autocomplete="email">
+            <span class="field-error" id="err-email"></span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="cf-phone">Phone</label>
+            <input type="tel" id="cf-phone" name="phone" autocomplete="tel">
+            <span class="field-error" id="err-phone"></span>
+          </div>
+          <div class="form-field">
+            <label for="cf-subject">Subject</label>
+            <input type="text" id="cf-subject" name="subject" required>
+            <span class="field-error" id="err-subject"></span>
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="cf-message">Message</label>
+          <textarea id="cf-message" name="message" rows="5" required></textarea>
+          <span class="field-error" id="err-message"></span>
+        </div>
+
+        <button type="submit" class="btn btn-gold btn-lg ripple" id="contactSubmit">
+          <span class="btn-text">Send Message</span>
+          <span class="btn-spinner" aria-hidden="true"></span>
+        </button>
+
+        <p class="form-msg" id="contactMsg" role="status" aria-live="polite"></p>
+        <p class="form-note">This form uses <strong>EmailJS</strong> — see <code>script.js</code> to add your Public Key, Service ID &amp; Template ID.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LOCATION / MAP ============ -->
+<section class="location section" id="location">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow center">Find Us</p>
+      <h2 class="section-title center">Gandhare Village, Khadakpada, Kalyan</h2>
+    </div>
+    <div class="map-wrap reveal">
+      <iframe
+        title="Coffee Shop location map"
+        src="https://www.google.com/maps?q=Gandhare+Village,+Khadakpada,+Kalyan,+Maharashtra+421301&output=embed"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a href="#home" class="nav-logo">
+        <span class="logo-mark">☕</span>
+        <span class="logo-text">Coffee<em>Shop</em></span>
+      </a>
+      <p>Freshly brewed happiness in every cup — Gandhare Village, Khadakpada, Kalyan.</p>
+      <div class="footer-social">
+        <a href="https://instagram.com/coffeeshop_placeholder" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
+        <a href="#" aria-label="Facebook">FB</a>
+        <a href="#" aria-label="WhatsApp">WA</a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a href="#about">About</a>
+      <a href="#menu">Menu</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#contact">Contact</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Opening Hours</h4>
+      <p>Mon – Fri: 7:30 AM – 10:30 PM</p>
+      <p>Sat – Sun: 8:00 AM – 11:00 PM</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <p>Gandhare Village, Khadakpada,<br>Kalyan, Maharashtra 421301</p>
+      <p>+91 7977369769 <em>(placeholder)</em></p>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© <span id="year"></span> Coffee Shop. All rights reserved.</p>
+    <p>Crafted with ♥ and a lot of espresso.</p>
+  </div>
+</footer>
+
+<!-- ============ FLOATING BUTTONS ============ -->
+<a href="https://wa.me/91XXXXXXXXXX" target="_blank" rel="noopener" class="float-btn float-whatsapp" aria-label="Chat on WhatsApp (placeholder number)">
+  <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.38a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.97 6.45 17.5 2 12.04 2zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.19 8.19 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.24 8.24zm4.52-6.17c-.25-.12-1.47-.72-1.69-.81-.23-.08-.4-.12-.56.13-.17.25-.65.81-.79.97-.15.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.15.16-.25.25-.41.08-.17.04-.31-.02-.44-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.87.85-.87 2.08 0 1.22.89 2.41 1.01 2.57.12.17 1.75 2.67 4.25 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.28z"/></svg>
+</a>
+<a href="tel:+91 7977369769" class="float-btn float-call" aria-label="Call us (placeholder number)">
+  <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.5.6.6 0 1.1.5 1.1 1.1V20c0 .6-.5 1.1-1.1 1.1C10.3 21.1 2.9 13.7 2.9 4.5c0-.6.5-1.1 1.1-1.1H7.4c.6 0 1.1.5 1.1 1.1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.2 1L6.6 10.8z"/></svg>
+</a>
+
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<!-- Custom cursor -->
+<div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
